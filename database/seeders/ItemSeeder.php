@@ -8,9 +8,7 @@ use App\Models\Item;
 
 class ItemSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
+    
     public function run(): void
     {
         Item::factory(10)->create();
