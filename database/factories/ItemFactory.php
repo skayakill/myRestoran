@@ -13,7 +13,7 @@ class ItemFactory extends Factory
         return [
             'name' => $this->faker->name(), 
             'category_id' => $this->faker->numberBetween(1, 2),
-            'price' => $this->faker->randomFloat(2, 1000, 1000000),
+            'price' => $this->faker->randomFloat(2, 1000, 10000),
             'description' => $this->faker->text(),
             'img' => fake()->randomElement(
             ['https://images.unsplash.com/photo-1579584425555-c3ce17fd4351',

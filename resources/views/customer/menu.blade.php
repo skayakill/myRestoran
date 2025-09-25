@@ -1,8 +1,8 @@
 @extends('customer.layouts.master')
 @section('content')
 
-<!-- Fruits Shop Start-->
-        <div class="container-fluid fruite py-5">
+       <div class="container-fluid fruite py-5">
+
             <div class="container py-5">
                 <div class="row g-4">
                     <div class="col-lg-12">
@@ -17,14 +17,14 @@
                                                 <img src="{{ asset('img_item_upload/' . $item->img) }}" class="img-fluid w-100 rounded-top" alt="" onerror="this.onerror=null;this.src='{{ $item->img }}';">
                                             </div>
                                             <div class="text-white bg-secondary px-3 py-1 rounded position-absolute
-                                            @if ($item->category->cat_name == 'Makanan')
+                                            @if ($item->category && $item->category->cat_name == 'Makanan')
                                                 bg-warning
-                                            @elseif ($item->category->cat_name == 'Minuman')
+                                            @elseif ($item->category && $item->category->cat_name == 'Minuman')
                                                 bg-info
                                             @else
                                                 bg-primary
                                                @endif" style="top: 10px; left: 10px;">
-                                               {{ $item->category->cat_name }}
+                                               {{ $item->category ? $item->category->cat_name : 'Tidak ada kategori' }}
                                             </div>
                                             <div class="p-4 border border-secondary border-top-0 rounded-bottom">
                                                 <h4>{{ $item->name }}</h4>
@@ -36,27 +36,37 @@
                                             </div>
                                         </div>
                                     </div>
-                                    @endforeach
-
-                                    <!-- Pagination -->
-                                    <!-- <div class="col-12">
-                                        <div class="pagination d-flex justify-content-center mt-5">
-                                            <a href="#" class="rounded">&laquo;</a>
-                                            <a href="#" class="active rounded">1</a>
-                                            <a href="#" class="rounded">2</a>
-                                            <a href="#" class="rounded">3</a>
-                                            <a href="#" class="rounded">4</a>
-                                            <a href="#" class="rounded">5</a>
-                                            <a href="#" class="rounded">6</a>
-                                            <a href="#" class="rounded">&raquo;</a>
-                                        </div>
-                                    </div> -->
-                                </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Fruits Shop End-->
     @endsection
+    
+@section('scripts')
+<script>
+    function addToCart(menuId) {
+        event.preventDefault();
+        fetch('/cart/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({ id: menuId })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                alert('Item berhasil ditambahkan!');
+                // Update UI keranjang
+            } else {
+                alert(data.message || 'Gagal menambahkan item!');
+            }
+        })
+        .catch(() => alert('Terjadi kesalahan!'));
+    }
+    </script>
+@endsection

@@ -13,7 +13,7 @@
         <!-- Navbar End -->
 
         @yield('content')
-        
+
          <!-- Fruits Shop End -->
         
         <!-- Footer Start -->
@@ -32,16 +32,12 @@
         <script src="{{ asset('assets/customer/lib/owlcarousel/owl.carousel.min.js') }}"></script>
         <script src="{{ asset('js/main.js') }}"></script>
 
-        <script>
-            document.getElementById('currentYear').textContent = new Date().getFullYear();
-        </script>
-        <script>
-            window.addEventListener('load', function() {
-                var spinner = document.getElementById('spinner');
-                if (spinner) {
-                    spinner.classList.remove('show');
-                }
-            });
-        </script>
+       <script src="{{ asset('assets/customer/js/main.js') }}"></script>
+
+       <script>
+           document.getElementById('currentYear').textContent = new Date().getFullYear();
+       </script>
+
+         @yield('scripts')
     </body>
 </html>
